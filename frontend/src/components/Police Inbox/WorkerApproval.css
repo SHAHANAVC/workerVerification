@@ -1,0 +1,111 @@
+.worker-detail-container {
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+  background: #f5f6fa;
+  min-height: 100vh;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #1e1e2f;
+}
+
+.worker-card {
+  background: linear-gradient(145deg, #ffffff, #e0e7ff);
+  border-radius: 18px;
+  padding: 30px 25px;
+  width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.worker-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #2b2b3d;
+  text-align: center;
+}
+
+.worker-card p {
+  font-size: 1rem;
+  color: #4b4b6b;
+  margin-bottom: 6px;
+}
+
+.work-history {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.work-history h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.job {
+  margin-bottom: 10px;
+}
+
+.verification-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.approve-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.decline-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background-color: #218838;
+}
+
+.decline-btn:hover {
+  background-color: #c82333;
+}
+
+.pcc-upload {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.pcc-upload h4 {
+  margin-bottom: 10px;
+}
+
+.pcc-upload input {
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+.upload-btn {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background-color: #3730a3;
+}

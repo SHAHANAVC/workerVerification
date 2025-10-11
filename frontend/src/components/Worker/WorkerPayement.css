@@ -1,0 +1,55 @@
+/* paymenthistory.css */
+
+/* Container */
+.payment-history-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Page Title */
+.payment-history-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Table */
+.payment-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.payment-history-table th,
+.payment-history-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.payment-history-table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #111;
+}
+
+.payment-history-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Hover effect */
+.payment-history-table tr:hover {
+  background-color: #f1f5f9;
+  transition: 0.2s;
+}
+
+/* Amount style */
+.payment-history-table td:nth-child(2) {
+  color: #16a34a; /* green for amount */
+  font-weight: 500;
+}

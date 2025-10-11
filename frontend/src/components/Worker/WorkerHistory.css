@@ -1,0 +1,54 @@
+
+/* Container */
+.work-history-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Page Title */
+.work-history-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Table */
+.work-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.work-history-table th,
+.work-history-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.work-history-table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #111;
+}
+
+.work-history-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Hover effect */
+.work-history-table tr:hover {
+  background-color: #f1f5f9;
+  transition: 0.2s;
+}
+
+/* Rating style */
+.work-history-table td:last-child {
+  color: #ff9900; /* Gold color for stars */
+  font-weight: 500;
+}

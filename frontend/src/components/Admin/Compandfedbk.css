@@ -1,0 +1,57 @@
+.complaints-feedback-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.complaints-feedback-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.section-box {
+  margin-bottom: 30px;
+}
+
+.section-box h3 {
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+/* Table Styling */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.data-table th, .data-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.data-table th {
+  background: #007bff;
+  color: white;
+}
+
+/* Status Badges */
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+}
+
+.status.pending {
+  background: orange;
+}
+
+.status.resolved {
+  background: green;
+}

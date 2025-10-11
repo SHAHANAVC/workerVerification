@@ -1,0 +1,46 @@
+.police-dashboard-container {
+  padding: 50px 20px;
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #1e1e2f;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.option-card {
+  background: linear-gradient(135deg, #ffffff, #dfe7ff);
+  border-radius: 18px;
+  padding: 40px 30px;
+  width: 250px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.35s ease;
+}
+
+.option-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.option-card h3 {
+  font-size: 1.5rem;
+  color: #2b2b3d;
+  margin-bottom: 10px;
+}
+
+.option-card p {
+  color: #4b4b6b;
+  font-size: 0.95rem;
+}
