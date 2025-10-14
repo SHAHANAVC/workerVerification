@@ -1,44 +1,4 @@
-// import mongoose, { Schema } from 'mongoose';
 
-// // Worker schema
-// const workerSchema = new Schema({
-//   commonKey: {
-//     type: Schema.Types.ObjectId,
-//     ref: "Login", // Assuming a 'Login' model for authentication and relationships
-//   },
-//   name: {
-//     type: String,
-//     required: true,
-//   },
-//   jobTitle: {
-//     type: String,
-//     required: true,
-//   },
-//   skill: {
-//     type: String,
-//     required: true,
-//   },
-//   email: {
-//     type: String,
-//     required: true,
-  
-//   },
-//   phone: {
-//     type: String,
-//     required: true,
-//   },
-
-//   image: {
-//     type: String,
-//     required: true, // Path to the image file (stored as a string)
-//   },
-
-// });
-
-// // Create the Worker model
-// const workerData = mongoose.model('Worker', workerSchema);
-
-// export default workerData;
 import mongoose, { Schema } from 'mongoose';
 
 // Worker schema
@@ -90,7 +50,15 @@ const workerSchema = new Schema({
   temporaryAddress: {
     type: String,
   },
- 
+   // 🆕 Add these new fields
+  clearanceCertificate: {
+    type: String, // path or URL to uploaded PCC file
+  },
+  clearanceStatus: {
+    type: String,
+    enum: ["Pending", "Completed"],
+    default: "Pending",
+  },
 });
 
 // Create the Worker model

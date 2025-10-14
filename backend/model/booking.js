@@ -1,31 +1,4 @@
-// import mongoose from "mongoose";
 
-// const bookingSchema = new mongoose.Schema({
-//   productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-//   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-//   startDate: { type: Date, required: true },
-//   endDate: { type: Date, required: true },
-//   status:{type:String,default:"booked"},
-// deliveryBoyId:{ type: mongoose.Schema.Types.ObjectId, ref:'DeliveryBoy'},
-//  address:{type:String},
-//  otp: {
-//   type: String,
-//   default:null
-// },
-// deliveryConfirmed: {
-//   type: Boolean,
-//   default: false,
-// },
-// otpCode:{
-//   type: String,
-//   default:null
-// },
-//  phonenumber:{type:String}
-// });
-
-// // module.exports = mongoose.model("Booking", bookingSchema);
-// const Booking= mongoose.model("Booking",bookingSchema);
-// export default Booking;
 import mongoose, { Schema } from "mongoose";
 
 const bookingSchema = new Schema(
@@ -42,7 +15,7 @@ const bookingSchema = new Schema(
     },
     date: {
       type: Date,
-      default: Date.now,
+      // default: Date.now,
     },
     status: {
       type: String,

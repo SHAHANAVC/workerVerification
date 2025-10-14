@@ -6,6 +6,8 @@ import {
   updateWorker,
   deleteWorker,
   getWorkerByLoginId,
+  getVerifiedWorkers,
+  uploadPCC,
 } from "../controllers/workerController.js";
 import { registerWorker } from "../controllers/workerController.js";
 import upload from "../middleware/upload.js";
@@ -19,4 +21,6 @@ router.get("/:id", getWorkerById);      // Get single worker by ID
 router.put("/:id", updateWorker);       // Update worker by ID
 router.delete("/:id", deleteWorker);    // Delete worker by ID
 router.get('/home/:id',getWorkerByLoginId)
+router.get('/verified',getVerifiedWorkers)
+router.post("/:id/pcc", upload.single("pccFile"), uploadPCC);
 export default router;

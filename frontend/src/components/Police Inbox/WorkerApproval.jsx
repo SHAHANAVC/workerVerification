@@ -1,88 +1,115 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+// import api from "../api"; // your axios instance (see below)
 import "./WorkerApproval.css";
+import api from "../../api";
 
-const dummyWorker = {
-  id: "W12345",
-  name: "Chottah Suren",
-  role: "Skilled Coconut Tree Climber",
-  location: "Kochi, Kerala",
-  contact: "+91 9876543210",
-  aadhaar: "1234-5678-9012",
-  dob: "1990-05-12",
-  gender: "Male",
-  workHistory: [
-    { company: "Coconut Farms Pvt Ltd", duration: "6 months", rating: "Excellent" },
-    { company: "Kerala Tree Services", duration: "1 year", rating: "Good" },
-  ],
-  status: "Pending",
-};
+export default function WorkerList() {
+  const [workers, setWorkers] = useState([]);
+  const [filteredWorkers, setFilteredWorkers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-export default function WorkerDetail() {
-  const [status, setStatus] = useState(dummyWorker.status);
-  const [pccFile, setPccFile] = useState(null);
-
-  const handleApprove = () => {
-    setStatus("Approved");
-  };
-
-  const handleDecline = () => {
-    setStatus("Declined");
-  };
-
-  const handleFileChange = (e) => {
-    setPccFile(e.target.files[0]);
-  };
-
-  const handleUpload = () => {
-    if (pccFile) {
-      alert(`Police Clearance Certificate uploaded: ${pccFile.name}`);
-      // Here you can integrate blockchain/storage logic
+  // ✅ Fetch all workers from backend
+  const fetchWorkers = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("/workers");
+      setWorkers(response.data);
+      setFilteredWorkers(response.data);
+    } catch (err) {
+      console.error("Error fetching workers:", err);
+      setError("Failed to load workers");
+    } finally {
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchWorkers();
+  }, []);
+
+  // ✅ Approve Worker (example)
+  const handleApprove = async (workerId) => {
+    try {
+      const response = await api.put(`/workers/${workerId}/approve`);
+      setWorkers((prev) =>
+        prev.map((w) =>
+          w._id === workerId ? { ...w, clearanceStatus: "Completed" } : w
+        )
+      );
+      setFilteredWorkers((prev) =>
+        prev.map((w) =>
+          w._id === workerId ? { ...w, clearanceStatus: "Completed" } : w
+        )
+      );
+      alert(response.data.message || "Worker approved successfully!");
+    } catch (err) {
+      console.error("Error approving worker:", err);
+      setError("Failed to approve worker");
+    }
+  };
+
+  // ✅ Filter pending workers
+  const showPending = () => {
+    setFilteredWorkers(workers.filter((w) => w.clearanceStatus === "Pending"));
+  };
+
+  // ✅ Filter completed workers
+  const showCompleted = () => {
+    setFilteredWorkers(workers.filter((w) => w.clearanceStatus === "Completed"));
+  };
+
+  // ✅ Reset filter
+  const showAll = () => setFilteredWorkers(workers);
+
+  if (loading) return <p>Loading workers...</p>;
+  if (error) return <p className="error">{error}</p>;
+
   return (
-    <div className="worker-detail-container">
-      <h2>Worker Profile Verification</h2>
+    <div className="worker-list-container">
+      <h2>Worker Clearance Management</h2>
 
-      <div className="worker-card">
-        <h3>{dummyWorker.name}</h3>
-        <p><strong>Worker ID:</strong> {dummyWorker.id}</p>
-        <p><strong>Role:</strong> {dummyWorker.role}</p>
-        <p><strong>Location:</strong> {dummyWorker.location}</p>
-        <p><strong>Contact:</strong> {dummyWorker.contact}</p>
-        <p><strong>Aadhaar:</strong> {dummyWorker.aadhaar}</p>
-        <p><strong>DOB:</strong> {dummyWorker.dob}</p>
-        <p><strong>Gender:</strong> {dummyWorker.gender}</p>
-        <p><strong>Status:</strong> {status}</p>
-
-        <div className="work-history">
-          <h4>Work History</h4>
-          {dummyWorker.workHistory.map((job, index) => (
-            <div key={index} className="job">
-              <p><strong>Company:</strong> {job.company}</p>
-              <p><strong>Duration:</strong> {job.duration}</p>
-              <p><strong>Rating:</strong> {job.rating}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="verification-buttons">
-          {status === "Pending" && (
-            <>
-              <button className="approve-btn" onClick={handleApprove}>Approve</button>
-              <button className="decline-btn" onClick={handleDecline}>Decline</button>
-            </>
-          )}
-        </div>
-
-        {status === "Approved" && (
-          <div className="pcc-upload">
-            <h4>Upload Police Clearance Certificate</h4>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleUpload} className="upload-btn">Upload PCC</button>
-          </div>
-        )}
+      <div className="filter-buttons">
+        <button onClick={showAll}>All</button>
+        <button onClick={showPending}>Pending</button>
+        <button onClick={showCompleted}>Completed</button>
       </div>
+
+      <table className="worker-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Job</th>
+            <th>Skill</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredWorkers.map((worker) => (
+            <tr key={worker._id}>
+              <td>{worker.name}</td>
+              <td>{worker.jobTitle}</td>
+              <td>{worker.skill}</td>
+              <td>{worker.email}</td>
+              <td>{worker.clearanceStatus}</td>
+              <td>
+                {worker.clearanceStatus === "Pending" ? (
+                  <button
+                    onClick={() => handleApprove(worker._id)}
+                    className="approve-btn"
+                  >
+                    Approve
+                  </button>
+                ) : (
+                  "✅ Completed"
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

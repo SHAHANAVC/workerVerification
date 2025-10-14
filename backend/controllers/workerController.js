@@ -157,3 +157,69 @@ export const getWorkerByLoginId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+export const getVerifiedWorkers = async (req, res) => {
+  console.log('vvvvvvvvvvvvvvv');
+  
+  try {
+    const workers = await workerData
+      .find()
+      .populate({
+        path: "commonKey",
+        match: { verify: true },
+      
+      });
+console.log(workers);
+
+    // Filter out workers where populate returned null
+    // const verifiedWorkers = workers.filter(w => w.commonKey !== null);
+
+    res.status(200).json(workers);
+  } catch (error) {
+    console.error("Error fetching verified workers:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// routes/workerRoutes.js
+router.put("/:id/approve", async (req, res) => {
+  try {
+    const updated = await Worker.findByIdAndUpdate(
+      req.params.id,
+      { clearanceStatus: "Completed" },
+      { new: true }
+    );
+    res.json({ message: "Worker clearance marked as completed", worker: updated });
+  } catch (error) {
+    res.status(500).json({ message: "Error approving worker", error });
+  }
+});
+
+// ✅ Upload Police Clearance Certificate
+export const uploadPCC = async (req, res) => {
+  try {
+    const workerId = req.params.id;
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const updatedWorker = await workerData.findByIdAndUpdate(
+      workerId,
+      {
+        clearanceCertificate: req.file.filename,
+        clearanceStatus: "Completed",
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "PCC uploaded successfully",
+      worker: updatedWorker,
+    });
+  } catch (error) {
+    console.error("Error uploading PCC:", error);
+    res.status(500).json({ message: "Error uploading PCC", error });
+  }
+};

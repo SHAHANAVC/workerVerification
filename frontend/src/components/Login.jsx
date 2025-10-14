@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -32,6 +32,17 @@ const navigate =useNavigate()
         localStorage.setItem("worker_logId",data.login._id)
 navigate('/WorkerProfile')
       }
+            if(data.login.role=='Admin'){
+        
+navigate('/admin')}
+                 if(data.login.role=='user'){
+        localStorage.setItem("userLogId",data.login._id)
+        
+navigate('/userhome')}
+                 if(data.login.role=='police'){
+        // localStorage.setItem("userLogId",data.login._id)
+        
+navigate('/Policehome')}  
       // window.location.href = userType === "worker" ? "/WorkerProfile" : "/ClientDashboard";
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
@@ -49,9 +60,12 @@ navigate('/WorkerProfile')
           <span className="logo-text">WorkHub</span>
         </div>
         <nav className="header-nav">
-          <a href="/how-it-works">How It Works</a>
-          <a href="/services">Services</a>
-          <a href="/pricing">Pricing</a>
+        <Link to={'/workerRegistration'}>  <a >Worker</a></Link>
+        
+        <Link to={'/userregister'}>  <a >User</a></Link>
+
+          
+     
         </nav>
       </header>
 

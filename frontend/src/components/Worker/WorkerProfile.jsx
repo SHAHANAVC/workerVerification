@@ -188,7 +188,7 @@ console.log('oooooooooooo');
             <div className="card">
               <div className="card-body text-center">
                 <img
-                  src={worker.avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                  src={`http://localhost:5000/uploads/${worker.image}` || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
                   alt="Worker"
                   className="rounded-circle"
                   width="150"

@@ -1,43 +1,74 @@
+
 import bcrypt from "bcryptjs";
 import userData from "../model/userModel.js";
 import loginData from "../model/login.js";
 
+// ✅ Create (Register) User
 export const createUser = async (req, res) => {
-  const { name, email, phone, password } = req.body; // include password
-
+  console.log(req.body);
+  
   try {
-    // Check if user already exists in Login
-    const existingLogin = await loginData.findOne({ username: email });
-    if (existingLogin) {
-      return res.status(400).json({ message: "User already exists" });
+    const {
+      firstName,
+      middleName,
+      lastName,
+      
+      email,
+      password,
+      address,
+      pincode,
+      state,
+      district,
+    } = req.body;
+
+    // Validate required fields
+    if (!firstName || !lastName  || !email || !password || !address || !pincode) {
+      return res.status(400).json({ message: "All required fields must be filled" });
     }
 
-    // Hash the password and create login
+    // Check if username or email already exists
+    const existingLogin = await loginData.findOne({ username:email });
+    if (existingLogin) {
+      return res.status(400).json({ message: "Username already exists" });
+    }
+
+    const existingEmail = await userData.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    // Hash password and create login entry
     const hashedPassword = await bcrypt.hash(password, 10);
     const login = await loginData.create({
-      username: email,
+      username:email,
       password: hashedPassword,
       role: "user",
     });
 
-    // Create user profile and link login
+    // Create linked user profile
     const user = await userData.create({
-      name,
+      firstName,
+      middleName,
+      lastName,
       email,
-      phone,
+      address,
+      pincode,
+      state,
+      district,
       commonKey: login._id,
     });
 
     res.status(201).json({ message: "User registered successfully", user });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 
 // ✅ Get All Users
 export const getUsers = async (req, res) => {
   try {
-    const users = await userData.find();
+    const users = await userData.find().populate("commonKey", "username");
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -47,7 +78,7 @@ export const getUsers = async (req, res) => {
 // ✅ Get User by ID
 export const getUserById = async (req, res) => {
   try {
-    const user = await userData.findById(req.params.id);
+    const user = await userData.findById(req.params.id).populate("commonKey");
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user);
   } catch (error) {
@@ -74,8 +105,29 @@ export const deleteUser = async (req, res) => {
   try {
     const user = await userData.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Delete linked login record
+    await loginData.findByIdAndDelete(user.commonKey);
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+export const getUserByLoginId = async (req, res) => {
+  console.log(req.params.id);
+  
+  try {
+    const user = await userData.findOne({ commonKey: req.params.id }).populate("commonKey");
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ message: error.message });
   }
 };

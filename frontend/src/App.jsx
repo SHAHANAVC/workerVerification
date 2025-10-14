@@ -19,6 +19,7 @@ import Workerregistr from "./components/Worker/Workerregistr";
 import UserRegistration from "./components/User/Userregister";
 import WorkersTable from "./components/Admin/WorkersTable";
 import AdminPanel from "./components/Admin/AdminPanel";
+import UserHome from "./components/User/UserHome";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -47,6 +48,7 @@ function App() {
 
         {/* --- */}
         <Route path="/viewWorkers" element={<WorkersTable/>}/>
+        <Route path="/userhome" element={<UserHome/>}/>
         
       </Routes>
     </>

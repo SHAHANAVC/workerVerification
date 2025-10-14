@@ -11,7 +11,7 @@ export default function PoliceDashboard() {
       <div className="options-container">
         <div
           className="option-card"
-          onClick={() => navigate("/police/verification")}
+          onClick={() => navigate("/Workeraprove")}
         >
           <h3>Verification of Worker</h3>
           <p>View and verify pending worker requests</p>
