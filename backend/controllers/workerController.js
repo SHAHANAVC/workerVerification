@@ -183,22 +183,12 @@ console.log(workers);
   }
 };
 
-// routes/workerRoutes.js
-router.put("/:id/approve", async (req, res) => {
-  try {
-    const updated = await Worker.findByIdAndUpdate(
-      req.params.id,
-      { clearanceStatus: "Completed" },
-      { new: true }
-    );
-    res.json({ message: "Worker clearance marked as completed", worker: updated });
-  } catch (error) {
-    res.status(500).json({ message: "Error approving worker", error });
-  }
-});
+
 
 // ✅ Upload Police Clearance Certificate
 export const uploadPCC = async (req, res) => {
+  console.log('upload');
+  
   try {
     const workerId = req.params.id;
     if (!req.file) {
