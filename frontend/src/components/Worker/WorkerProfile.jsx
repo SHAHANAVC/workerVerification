@@ -261,7 +261,7 @@ console.log('oooooooooooo');
                 { title: "Payment History", link: "/WorkerPayment", color: "success" },
                 { title: "Feedback", link: "/Workerfeedback", color: "danger" },
                 { title: "All Details", link: "/Workerdetails", color: "warning" },
-                { title: "Verify Worker", link: "/worker/verify", color: "info" },
+                // { title: "Verify Worker", link: "/worker/verify", color: "info" },
                 { title: "Request Inbox", link: "/RequestInbox", color: "primary" }
               ].map((item) => (
                 <div className="col-sm-6 mb-3" key={item.title}>

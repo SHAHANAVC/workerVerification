@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import axios from "axios";
+import { Form, Button, Container, Card, Alert, Spinner } from "react-bootstrap";
 import api from "../../api";
 
 const RegisterPolice = () => {
@@ -27,9 +28,7 @@ const RegisterPolice = () => {
     setError(null);
 
     try {
-      const response = await api.post("/police/register",
-        formData
-      );
+      const response = await api.post("/police/register", formData);
       setMessage(response.data.message);
       setFormData({
         name: "",
@@ -47,94 +46,122 @@ const RegisterPolice = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md space-y-5"
-      >
-        <h2 className="text-2xl font-semibold text-center text-blue-700">
-          Register Police Officer
-        </h2>
+    <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+      <Container style={{ maxWidth: "500px" }}>
+        <Card className="shadow-lg border-0 rounded-4">
+          <Card.Body className="p-4">
+            <h2 className="text-center text-primary fw-bold mb-4">
+              👮 Register Police Officer
+            </h2>
 
-        {message && (
-          <div className="p-2 text-green-700 bg-green-100 border border-green-400 rounded">
-            {message}
-          </div>
-        )}
-        {error && (
-          <div className="p-2 text-red-700 bg-red-100 border border-red-400 rounded">
-            {error}
-          </div>
-        )}
+            {message && <Alert variant="success">{message}</Alert>}
+            {error && <Alert variant="danger">{error}</Alert>}
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Enter full name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+              <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+              <Form.Group className="mb-3" controlId="phone">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phone"
+                  placeholder="Enter phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+              <Form.Group className="mb-3" controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Create password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-        <input
-          type="text"
-          name="station"
-          placeholder="Police Station"
-          value={formData.station}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+              <Form.Group className="mb-3" controlId="station">
+                <Form.Label>Police Station</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="station"
+                  placeholder="Enter police station"
+                  value={formData.station}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-        <input
-          type="text"
-          name="rank"
-          placeholder="Rank"
-          value={formData.rank}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+              <Form.Group className="mb-4" controlId="rank">
+                <Form.Label>Rank</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="rank"
+                  placeholder="Enter rank"
+                  value={formData.rank}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition duration-200 disabled:opacity-60"
-        >
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
+              <div className="d-grid">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        className="me-2"
+                      />
+                      Registering...
+                    </>
+                  ) : (
+                    "Register Officer"
+                  )}
+                </Button>
+              </div>
+            </Form>
+
+            <p className="text-center text-muted mt-4 mb-0">
+              © {new Date().getFullYear()} Police Registration System
+            </p>
+          </Card.Body>
+        </Card>
+      </Container>
     </div>
   );
 };

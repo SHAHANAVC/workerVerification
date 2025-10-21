@@ -104,7 +104,6 @@ export const updateWorker = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
 // ✅ Delete Worker
 // export const deleteWorker = async (req, res) => {
 //   try {
@@ -153,16 +152,11 @@ export const getWorkerByLoginId = async (req, res) => {
     res.status(200).json(worker);
   } catch (error) {
     console.log(error);
-    
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
 export const getVerifiedWorkers = async (req, res) => {
-  console.log('vvvvvvvvvvvvvvv');
-  
+console.log('vvvvvvvvvvvvvvv');  
   try {
     const workers = await workerData
       .find()
